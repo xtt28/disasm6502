@@ -1,8 +1,5 @@
 package io.github.xtt28.disasm6502.insn;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import io.github.xtt28.disasm6502.address.AddressingMode;
 
 public enum Opcode {
@@ -107,7 +104,7 @@ public enum Opcode {
     TXS(Mnemonic.TXS, 0x9A, AddressingMode.IMPLIED),
     STA_ABSOLUTE_X(Mnemonic.STA, 0x9D, AddressingMode.ABSOLUTE_INDEXED_X),
 
-    // OxA0-0xBF
+    // 0xA0-0xBF
     LDY_IMMEDIATE(Mnemonic.LDY, 0xA0, AddressingMode.IMMEDIATE),
     LDA_INDIRECT_X(Mnemonic.LDA, 0xA1, AddressingMode.INDEXED_INDIRECT),
     LDX_IMMEDIATE(Mnemonic.LDX, 0xA2, AddressingMode.IMMEDIATE),
@@ -178,15 +175,15 @@ public enum Opcode {
     private final byte opcodeNum;
     private final AddressingMode addressingMode;
 
-    private static final Map<Byte, Opcode> byteOpcodeLut = new HashMap<>();
+    private static final Opcode[] byteOpcodeLut = new Opcode[256];
 
     static {
         for (final var opcode : Opcode.values())
-            byteOpcodeLut.put(opcode.getOpcodeNum(), opcode);
+            byteOpcodeLut[opcode.getOpcodeNum() & 0xFF] = opcode;
     }
 
     public static Opcode fromRaw(final byte opcodeNum) {
-        return byteOpcodeLut.get(opcodeNum);
+        return byteOpcodeLut[opcodeNum & 0xFF];
     }
     
     Opcode(final Mnemonic mnemonic, final byte opcodeNum, final AddressingMode addressingMode) {
@@ -199,15 +196,15 @@ public enum Opcode {
         this(mnemonic, (byte) opcodeNum, addressingMode);
     }
 
-    public final Mnemonic getMnemonic() {
+    public Mnemonic getMnemonic() {
         return this.mnemonic;
     }
 
-    public final byte getOpcodeNum() {
+    public byte getOpcodeNum() {
         return this.opcodeNum;
     }
 
-    public final AddressingMode getAddressingMode() {
+    public AddressingMode getAddressingMode() {
         return this.addressingMode;
     }
 }

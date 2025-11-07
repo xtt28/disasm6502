@@ -5,7 +5,7 @@ import java.util.List;
 import io.github.xtt28.disasm6502.insn.Insn;
 import io.github.xtt28.disasm6502.insn.Opcode;
 
-public class InsnDecoder {
+public final class InsnDecoder {
 
     private InsnDecoder() {
     }

@@ -6,7 +6,7 @@ import java.util.List;
 import io.github.xtt28.disasm6502.insn.Insn;
 import io.github.xtt28.disasm6502.insn.Opcode;
 
-public class ProgramDecoder {
+public final class ProgramDecoder {
 
     private final byte[] programBytes;
     private int readIndex = 0;
@@ -15,7 +15,7 @@ public class ProgramDecoder {
         this.programBytes = programBytes;
     }
 
-    public final Insn getNextInsn() {
+    public Insn getNextInsn() {
         final List<Byte> insnArgBytes = new ArrayList<>(2);
         final var opcodeNum = programBytes[readIndex++];
         final var opcode = Opcode.fromRaw(opcodeNum);
@@ -27,7 +27,7 @@ public class ProgramDecoder {
         return insn;
     }
 
-    public final boolean hasNextInsn() {
+    public boolean hasNextInsn() {
         return this.readIndex < this.programBytes.length;
     }
 }

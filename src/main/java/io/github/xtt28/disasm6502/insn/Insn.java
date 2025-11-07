@@ -22,16 +22,16 @@ public final class Insn {
         this(opcode, new Address(opcode.getAddressingMode(), addrValue));
     }
 
-    public final Mnemonic getMnemonic() {
+    public Mnemonic getMnemonic() {
         return this.mnemonic;
     }
 
-    public final Address getAddress() {
+    public Address getAddress() {
         return this.address;
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         if (this.address.getAddressingMode() == AddressingMode.IMPLIED)
             return this.mnemonic.name();
 
